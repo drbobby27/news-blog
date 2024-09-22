@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 justify-center"
-    >
+  <div class="p-4">
+    <h2 class="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
+      Results for: '{{ `${searchQuery}` }}'
+    </h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
       <card
         v-for="{ title, urlToImage, description, url } in value?.articles"
         :key="title"
@@ -12,8 +14,6 @@
         :url="url"
       />
     </div>
-
-    <p>searchQuery: {{ searchQuery }}</p>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ import { useQuery } from "@/stores/useQuery.js";
 const store = useQuery();
 const { searchQuery } = store;
 
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 const KEY = ref(config.public.apiKey);
 
 const defaultImage =
@@ -33,5 +33,4 @@ const URL_QUERY = `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${K
 
 const { data } = await useFetch(URL_QUERY);
 const { value } = data;
-
 </script>

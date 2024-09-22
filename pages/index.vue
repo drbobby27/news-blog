@@ -1,5 +1,8 @@
 <template>
   <div class="p-4">
+    <h2 class="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
+      Trending News
+    </h2>
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 justify-center"
     >
@@ -24,5 +27,4 @@ const url: string = `https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKe
 const { data } = await useFetch(url);
 const { value } = data;
 
-console.log(data, "data");
 </script>

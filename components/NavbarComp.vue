@@ -2,7 +2,6 @@
   <nav
     class="bg-gray-800 h-[10vh] flex flex-col items-center justify-center text-center"
   >
-    <!-- Navbar content -->
     <div class="text-yellow-400 text-4xl font-extrabold mb-4">
       <NuxtLink to="/">New Era News</NuxtLink>
     </div>
@@ -66,31 +65,21 @@
 </template>
 
 <script setup lang="ts">
-
 import { useQuery } from '@/stores/useQuery.js'
-
 
 const store = useQuery();
 
-const config = useRuntimeConfig()
-const KEY = ref(config.public.apiKey);
-  
-
-// State to track which link is hovered
 const hoveredLink = ref("");
 const searchQuery = ref("");
 const error = ref("");
 
-// Toggle Menu for Mobile
 const isOpen = ref(false);
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
 };
 
-// Get current route
 const route = useRoute();
 
-// Function to check if the current route is active
 const isActive = (path: string) => {
   if (hoveredLink.value === path) {
     return "hover:text-yellow-300 transition-colors duration-300";
@@ -102,10 +91,7 @@ const isActive = (path: string) => {
 
 const handleQuery = async () => {
   store.setSearchQuery(searchQuery.value);
-  const URL_QUERY = `https://newsapi.org/v2/everything?q=${searchQuery.value}&apiKey=${KEY.value}`;
-
   await navigateTo('/results');
-
   searchQuery.value = '';
 };
 
