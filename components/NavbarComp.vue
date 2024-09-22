@@ -1,11 +1,15 @@
+
 <template>
-  <nav
-    class="bg-gray-800 h-[10vh] flex flex-col items-center justify-center text-center"
-  >
+  <nav class="bg-gray-800 w-full h-auto flex flex-col items-center justify-center text-center p-4 fixed top-0 z-50">
     <div class="text-yellow-400 text-4xl font-extrabold mb-4">
-      <NuxtLink to="/">New Era News</NuxtLink>
+      <NuxtLink to="/">New Era Times</NuxtLink>
     </div>
-    <ul class="space-y-4 lg:space-y-0 lg:flex lg:space-x-8 text-white text-lg">
+    <ul
+      :class="[
+        'space-y-4 text-lg text-white lg:space-y-0 lg:flex lg:space-x-8',
+        isOpen ? 'flex flex-col items-center' : 'hidden lg:flex',
+      ]"
+    >
       <li>
         <NuxtLink
           :to="'/'"
@@ -23,24 +27,11 @@
           @mouseover="hoveredLink = '/about'"
           @mouseleave="hoveredLink = ''"
         >
-          About US
+          About Us
         </NuxtLink>
       </li>
-
       <li class="relative">
-        <input
-          v-model="searchQuery"
-          @keyup.enter="handleQuery"
-          placeholder="Search..."
-          class="p-1 lg:p-0.5 rounded-lg text-gray-800 border border-gray-400 w-48 lg:w-36 text-sm lg:text-xs"
-        />
-        <button
-          @click="handleQuery"
-          class="absolute right-0 top-0 mt-1 mr-1 text-yellow-400"
-        >
-          🔍
-        </button>
-        <p v-if="error" class="text-red-500 text-xs mt-1">{{ error }}</p>
+        <search-bar />
       </li>
     </ul>
     <div class="lg:hidden absolute top-4 right-4">
@@ -65,21 +56,12 @@
 </template>
 
 <script setup lang="ts">
-import { useQuery } from '@/stores/useQuery.js'
-
-const store = useQuery();
-
 const hoveredLink = ref("");
-const searchQuery = ref("");
-const error = ref("");
-
 const isOpen = ref(false);
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
 };
-
 const route = useRoute();
-
 const isActive = (path: string) => {
   if (hoveredLink.value === path) {
     return "hover:text-yellow-300 transition-colors duration-300";
@@ -88,11 +70,10 @@ const isActive = (path: string) => {
     ? "text-yellow-300 transition-colors duration-300"
     : "hover:text-yellow-300 transition-colors duration-300";
 };
-
-const handleQuery = async () => {
-  store.setSearchQuery(searchQuery.value);
-  await navigateTo('/results');
-  searchQuery.value = '';
-};
-
 </script>
+
+<style scoped>
+nav {
+  width: 100%;
+}
+</style>

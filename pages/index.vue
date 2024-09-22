@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4  mt-[12vh]">
     <h2 class="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
       Trending News
     </h2>
@@ -19,12 +19,10 @@
 </template>
 
 <script setup lang="ts">
-
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 const KEY = ref(config.public.apiKey);
 const url: string = `https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${KEY.value}`;
 
 const { data } = await useFetch(url);
 const { value } = data;
-
 </script>
