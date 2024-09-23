@@ -10,37 +10,29 @@
 </template>
 
 <script setup lang="ts">
+
 import { useQuery } from "@/stores/useQuery.js";
 const store = useQuery();
-const { setInputQuery, setResultQuery, clearResults, resultsQuery } = store
 const searchQuery = ref( "" );
 const error = ref( "" );
-const route = useRoute()
 const config = useRuntimeConfig();
 const KEY = ref( config.public.apiKey );
 
-const handleQuery = async () => {
+async function handleQuery() {
   async function handleFetching() {
     const URL_QUERY = `https://newsapi.org/v2/everything?q=${searchQuery.value}&apiKey=${KEY.value}`;
     const data = await $fetch( URL_QUERY );
     const { articles } = data
 
-    setInputQuery( searchQuery.value );
-    setResultQuery( articles );
-    console.log( { data: articles } );
+    store.setInputQuery( searchQuery.value );
+    store.setResultQuery( articles );
+    console.log( { articles }, 'articles search bar' );
 
     await navigateTo( "/results" );
     searchQuery.value = "";
-    clearResults()
-
-    console.log( {
-      route,
-      articles
-    }, 'after navigarte to fromsearch bar' );
   }
 
   if ( searchQuery.value.trim() ) {
-    console.log( route?.fullPath, ' en searchQuery.value.trim()' );
     handleFetching()
   }
 };

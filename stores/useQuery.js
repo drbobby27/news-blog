@@ -11,9 +11,6 @@ export const useQuery = defineStore("store", {
     },
     setResultQuery(dataApi) {
       this.resultsQuery = dataApi; 
-    },
-    clearResults() {
-      this.resultsQuery = []; 
     }
   }
 });
