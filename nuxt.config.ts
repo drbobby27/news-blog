@@ -12,7 +12,7 @@ export default defineNuxtConfig( {
   },
   app: {
     head: {
-      title: 'New Era News',
+      title: 'New Era Times',
       meta: [
         {
           name: 'viewport',
@@ -21,7 +21,7 @@ export default defineNuxtConfig( {
         {
           hid: 'description',
           name: 'description',
-          content: 'New Era News'
+          content: 'New Era Times'
         }
       ],
     }

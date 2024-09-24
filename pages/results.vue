@@ -2,7 +2,7 @@
   <div class="p-4 mt-[12vh]">
     <div v-if="paginatedResults.length">
       <h2 class="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
-        Results for: '{{ store.searchQuery }}'
+        Results for: '{{ searchQuery }}'
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
@@ -35,30 +35,32 @@
       </div>
     </div>
 
-    <div v-else-if="!paginatedResults.length && store.searchQuery">
+    <div v-else-if="!paginatedResults.length && searchQuery">
       <h2 class="text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
-        No Results for: '{{ store.searchQuery }}'
+        No Results for: '{{ searchQuery }}'
       </h2>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { useQuery } from "@/stores/useQuery.js";
+import { storeToRefs } from 'pinia' 
 
 const store = useQuery();
+const { resultsQuery, searchQuery } = storeToRefs(store)
 const resultsPerPage = 6; 
 const currentPage = ref(1);
 
+
 const totalPages = computed(() => {
-  return Math.ceil(store.resultsQuery.length / resultsPerPage);
+  return Math.ceil(resultsQuery.value?.length / resultsPerPage);
 });
 
 const paginatedResults = computed(() => {
   const start = (currentPage.value - 1) * resultsPerPage;
   const end = start + resultsPerPage;
-  return store.resultsQuery.slice(start, end);
+  return resultsQuery.value?.slice(start, end);
 });
 
 const prevPage = () => {

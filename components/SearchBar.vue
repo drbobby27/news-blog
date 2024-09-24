@@ -26,14 +26,13 @@ async function handleQuery() {
 
     store.setInputQuery( searchQuery.value );
     store.setResultQuery( articles );
-    console.log( { articles }, 'articles search bar' );
 
     await navigateTo( "/results" );
     searchQuery.value = "";
   }
 
   if ( searchQuery.value.trim() ) {
-    handleFetching()
+    await handleFetching()
   }
-};
+}
 </script>
